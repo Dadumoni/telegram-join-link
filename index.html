@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .telegram-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .telegram-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #0088cc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation-name: pulse;
+            animation-duration: 1.5s;
+            animation-timing-function: ease-out;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 136, 204, 0.5);
+            }
+            80% {
+                box-shadow: 0 0 0 14px rgba(0, 136, 204, 0);
+            }
+        }
+
+        .telegram-icon svg {
+            fill: #fff;
+            width: 30px;
+            height: 30px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #0088cc;
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            background: #006699;
+            padding: 0.5rem;
+            margin-top: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background: #0088cc;
+        }
+
+        .gallery-container {
+            margin-top: 4rem;
+            padding: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .gallery {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 0.5rem;
+        }
+
+        .gallery img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            .gallery img {
+                max-width: 150px;
+            }
+            
+            .gallery-container {
+                padding: 0.25rem;
+                margin-top: 6rem;
+            }
+            
+            .gallery {
+                gap: 0.25rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .telegram-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .telegram-float {
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .telegram-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .telegram-icon svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+        .gallery-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .gallery-nav button {
+            padding: 0.5rem 1rem;
+            background: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .telegram-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .telegram-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #0088cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .telegram-btn:hover {
+            background: #006699;
+        }
+
+        .ad-container {
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #f0f2f5;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 728px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .gallery img {
+            max-width: 120px;
+        }
+    
+        header {
+            padding: 0.8rem;
+        }
+    
+        .gallery-nav button {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+        }
+    
+        .ad-container {
+            margin: 1rem auto;
+            padding: 0.8rem;
+        }
+    
+        .telegram-btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+        }
+    
+        .telegram-icon {
+            width: 45px;
+            height: 45px;
+        }
+    
+        .telegram-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
+</style>
+</head>
+<body>
+    <header>
+        <svg class="telegram-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="32" height="32" fill="white">
+            <path d="M66.964 134.874s-32.08-10.062-51.344-16.002c-17.542-6.693-1.57-14.928 6.015-17.59 7.585-2.66 186.38-71.948 186.38-71.948s23.576-8.028 21.305 11.625c-.744 8.027-8.16 36.122-15.744 66.55-7.585 30.427-15.745 54.738-15.745 54.738s-1.264 14.103-15.743 14.103c-14.48 0-32.08-13.825-32.08-13.825s-40.783-27.65-61.45-41.752c-3.645-2.77-0.509-4.15 2.208-7.994 16.416-23.01 49.216-68.932 49.216-68.932s4.17-7.177-2.87-0.596c-33.077 30.427-68.008 61.131-68.008 61.131s-8.907 7.171-25.274 2.563z"/>
+        </svg>
+    </header>
+    <div class="gallery-container">
+        <div class="gallery">
+            <img src="https://moneymakingminds.shop/wp-content/uploads/2025/03/photo_1_2025-03-23_20-46-15.jpg" alt="Gallery Image 1">
+            <img src="https://moneymakingminds.shop/wp-content/uploads/2025/03/photo_2_2025-03-23_20-46-15.jpg" alt="Gallery Image 2">
+            <img src="https://moneymakingminds.shop/wp-content/uploads/2025/03/photo_3_2025-03-23_20-46-15.jpg" alt="Gallery Image 3">
+            <img src="https://moneymakingminds.shop/wp-content/uploads/2025/03/photo_4_2025-03-23_20-46-15.jpg" alt="Gallery Image 4">
+            <img src="https://moneymakingminds.shop/wp-content/uploads/2025/03/photo_5_2025-03-23_20-46-15.jpg" alt="Gallery Image 5">
+        </div>
+        <div class="gallery-nav">
+            <button onclick="slideGallery('prev')">Previous</button>
+            <button onclick="slideGallery('next')">Next</button>
+        </div>
+    </div>
+
+    <div class="telegram-container">
+        <a href="https://t.me/your_channel" class="telegram-btn" target="_blank">Join us on Telegram</a>
+    </div>
+
+    <div class="ad-container">
+        <!-- Ad placement code goes here -->
+        <p>Advertisement Space</p>
+    </div>
+
+    <a href="https://t.me/your_channel" target="_blank" class="telegram-float">
+        <div class="telegram-icon">
+            <svg viewBox="0 0 64 64"><path d="M56.4,8.2l-51.2,20c-1.7,0.6-1.6,3,0.1,3.5l9.7,2.9c2.1,0.6,3.8,2.2,4.4,4.3l3.8,12.1c0.5,1.6,2.5,2.1,3.7,0.9l5.2-5.3c0.9-0.9,2.2-1,3.2-0.3l11.5,8.4c1.6,1.2,3.9,0.3,4.3-1.7l8.7-41.8C60.4,9.1,58.4,7.4,56.4,8.2z M50,17.4L29.4,35.6c-1.1,1-1.9,2.4-2,3.9c-0.2,1.5-2.3,1.7-2.8,0.3l-0.9-3c-0.7-2.2,0.2-4.5,2.1-5.7l23.5-14.6C49.9,16.1,50.5,16.9,50,17.4z"></path></svg>
+        </div>
+    </a>
+
+    <script>
+        let currentIndex = 0;
+        const gallery = document.querySelector('.gallery');
+        const images = document.querySelectorAll('.gallery img');
+
+        function slideGallery(direction) {
+            const imageWidth = images[0].clientWidth + 16; // 16px for gap
+            if (direction === 'next') {
+                currentIndex = (currentIndex + 1) % images.length;
+            } else {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+            }
+            gallery.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+        }
+
+        // Touch events for mobile swipe
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        gallery.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        gallery.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                slideGallery('next');
+            } else if (touchEndX - touchStartX > 50) {
+                slideGallery('prev');
+            }
+        });
+    </script>
+</body>
+</html>
